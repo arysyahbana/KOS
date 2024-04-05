@@ -11,7 +11,8 @@
                 <h5 class="text-primary"><i class="menu-icon tf-icons bx bx-group bx-tada-hover"></i> Data Kost</h5>
             </div>
             <div class="card-body">
-                <form action="{{ route('kostOwner-store') }}" id="formAccountSettings" method="POST">
+                <form action="{{ route('kostOwner-store') }}" id="formAccountSettings" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Owner Kos</label>
@@ -62,6 +63,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 form-label" for="basic-icon-default-phone">Foto Kos</label>
+                        <div class="col-sm-10">
+                            <div class="mb-3 col-md-12">
+                                <input class="form-control" type="file" id="picture" name="file">
+                            </div>
+                        </div>
+                    </div>
                     <div class="row justify-content-end">
                         <div class="col-sm-10">
                             <button type="submit" class="btn btn-sm btn-primary">Add</button>
@@ -70,46 +79,5 @@
                 </form>
             </div>
         </div>
-        {{-- <div class="card">
-            <h5 class="card-header text-primary"><i class="menu-icon tf-icons bx bx-group bx-tada-hover"></i> Data Kost</h5>
-            <div class="table-responsive text-nowrap">
-                <div class="card-body">
-                    <form action="{{ route('kostOwner-update', Auth::user()->id) }}" id="formAccountSettings" method="POST">
-                        @csrf
-                        <div class="row">
-                            <div class="mb-3 col-md-12">
-                                <label for="user_id" class="form-label">Owner Kos</label>
-                                <input class="form-control" type="text" id="name" name="name" readonly
-                                    value="{{ Auth::user()->name }}" />
-                                </select>
-                            </div>
-                            <div class="mb-3 col-md-12">
-                                <label for="name" class="form-label">Nama Kost</label>
-                                <input class="form-control" type="text" id="name" name="name"
-                                    placeholder="Fullname"
-                                    @if ($kosts->isNotEmpty()) value="{{ $kosts->first()->name }}" @endif />
-                            </div>
-
-                            <div class="mb-3 col-md-12">
-                                <label for="alamat" class="form-label">Alamat</label>
-                                <input type="text" class="form-control" id="alamat" name="alamat"
-                                    placeholder="Alamat"
-                                    @if ($kosts->isNotEmpty()) value="{{ $kosts->first()->alamat }}" @endif />
-                            </div>
-                            <div class="mb-3 col-md-12">
-                                <label for="room" class="form-label">Jumlah Kamar</label>
-                                <input type="number" class="form-control" id="room" name="room"
-                                    placeholder="Jumlah kamar"
-                                    @if ($kosts->isNotEmpty()) value="{{ $kosts->first()->rooms }}" @endif />
-                            </div>
-                        </div>
-                        <div class="mt-2">
-                            <button type="submit" class="btn btn-sm btn-primary me-2">Update</button>
-                            <button type="reset" class="btn btn-sm btn-outline-secondary">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div> --}}
     </div>
 @endsection

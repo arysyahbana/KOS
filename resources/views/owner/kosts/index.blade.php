@@ -14,7 +14,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col col-9">
-                        <div class="d-flex flex-row mb-5">
+                        <div class="d-flex flex-row">
                             <div class="pt-2">
                                 <label class="fw-bold" for="basic-icon-default-fullname"><span class="px-3">Owner
                                         Kos</span></label>
@@ -31,8 +31,24 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="d-flex flex-row mb-5">
+                            <div class="pt-2"><label class="fw-bold" for="basic-icon-default-fullname"><span
+                                        class="px-3">Nomor Hp</span></label>
+                            </div>
+                            <div class="ps-1">
+                                <div class="input-group input-group-merge ps-0">
+                                    <span id="basic-icon-default-fullname2"
+                                        class="input-group-text border-0  fw-bold text-primary"><i
+                                            class="bx bx-phone"></i></span>
+                                    <input type="text" class="form-control border-0 fw-bold text-primary"
+                                        id="basic-icon-default-fullname" placeholder="Owner Kos"
+                                        value="{{ Auth::user()->hp }}" aria-describedby="basic-icon-default-fullname2"
+                                        readonly />
+                                </div>
+                            </div>
+                        </div>
                         <div class="row mb-3">
-                            <div class="alert alert-danger" role="alert">This is a danger alert — check it out!</div>
+                            {{-- <div class="alert alert-danger" role="alert">This is a danger alert — check it out!</div> --}}
                             <div class="col col-12">
                                 <div class="table-responsive text-nowrap">
                                     <table class="table">
@@ -41,6 +57,7 @@
                                                 <th class="fw-bold">Nama Kos</th>
                                                 <th class="fw-bold">Alamat</th>
                                                 <th class="fw-bold">Jumlah Kamar</th>
+                                                <th class="fw-bold">Foto</th>
                                                 <th class="fw-bold">Actions</th>
                                             </tr>
                                         </thead>
@@ -53,12 +70,18 @@
                                                 </tr>
                                             @else
                                                 @foreach ($kosts as $item)
+                                                    @php
+                                                        $path_photo = asset('storage/images/' . $item->file);
+                                                        $extphoto = pathinfo($path_photo, PATHINFO_EXTENSION);
+                                                    @endphp
                                                     <tr>
                                                         <td>
                                                             <span class="fw-medium">{{ $item->name }}</span>
                                                         </td>
                                                         <td><span class="fw-medium">{{ $item->alamat }}</span></td>
                                                         <td><span class="fw-medium">{{ $item->rooms }}</span></td>
+                                                        <td><img src="{{ $path_photo }}" alt=""
+                                                                class="img-fluid w-75"></td>
                                                         <td>
                                                             <div class="dropdown">
                                                                 <button type="button"
@@ -90,8 +113,15 @@
                         </div>
                     </div>
 
-                    <div class="col col-3">
-                        <img src="{{ asset('dist-admin/assets/img/avatars/1.png') }}" alt="" class="img-fluid">
+                    <div class="col col-3 d-flex justify-content-center align-items-center">
+                        @php
+                            $path_photo = asset('storage/images/profile/' . Auth::user()->foto);
+                            $extphoto = pathinfo($path_photo, PATHINFO_EXTENSION);
+                        @endphp
+                        <div class="card shadow rounded-pill" style="width: 15rem; height: 15rem;">
+                            <img src="{{ $path_photo }}" alt="" class="img-fluid rounded-pill"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -110,6 +140,8 @@
                         <tr>
                             <th class="fw-bold">Nama Kos</th>
                             <th class="fw-bold">Nomor Kamar</th>
+                            <th class="fw-bold">Fasilitas</th>
+                            <th class="fw-bold">Foto Kamar</th>
                             <th class="fw-bold">Harga</th>
                             <th class="fw-bold">Status</th>
                             <th class="fw-bold">Actions</th>
@@ -124,12 +156,19 @@
                             </tr>
                         @else
                             @foreach ($rooms as $item)
+                                @php
+                                    $path_photo_rooms = asset('storage/images/rooms/' . $item->file);
+                                    $extphoto_rooms = pathinfo($path_photo_rooms, PATHINFO_EXTENSION);
+                                @endphp
                                 <tr>
                                     <td>
                                         <span class="fw-medium">{{ $item->rKost->name }}</span>
                                     </td>
                                     <td><span class="fw-medium">{{ $item->room_number }}</span></td>
-                                    <td><span class="fw-medium">{{ $item->price }}</span></td>
+                                    <td><span class="fw-medium">{{ $item->fasilitas }}</span></td>
+                                    <td><img src="{{ $path_photo_rooms }}" alt="" class="img-fluid"
+                                            style="width: 5rem"></td>
+                                    <td><span class="fw-medium">Rp. {{ $item->price }}</span></td>
                                     <td><span class="fw-medium">{{ $item->status }}</span></td>
                                     <td>
                                         <div class="dropdown">
@@ -138,10 +177,12 @@
                                                 <i class="bx bx-dots-vertical-rounded"></i>
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="{{ route('roomOwner-edit', $item->id) }}"><i
+                                                <a class="dropdown-item"
+                                                    href="{{ route('roomOwner-edit', $item->id) }}"><i
                                                         class="bx bx-edit-alt me-1"></i>
                                                     Edit</a>
-                                                <a class="dropdown-item" href="{{ route('roomOwner-delete', $item->id) }}"
+                                                <a class="dropdown-item"
+                                                    href="{{ route('roomOwner-delete', $item->id) }}"
                                                     onclick="return confirm('are you sure?')"><i
                                                         class="bx bx-trash me-1"></i>
                                                     Delete</a>

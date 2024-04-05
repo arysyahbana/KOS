@@ -9,7 +9,8 @@
             <h5 class="card-header text-primary">Edit Kost</h5>
             <hr class="my-0" />
             <div class="card-body">
-                <form action="{{ route('kostOwner-update', $edit->id) }}" id="formAccountSettings" method="POST">
+                <form action="{{ route('kostOwner-update', $edit->id) }}" id="formAccountSettings" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="d-flex flex-row mb-5">
@@ -34,14 +35,19 @@
                             <input class="form-control" type="text" id="name" name="name" placeholder="Nama Kost"
                                 autofocus value="{{ $edit->name }}" />
                         </div>
-                        {{-- <div class="mb-3 col-md-12">
-                            <label class="form-label" for="hp">Nomor HP</label>
-                            <div class="input-group input-group-merge">
-                                <span class="input-group-text">IND (+62)</span>
-                                <input type="text" id="hp" name="hp" class="form-control"
-                                    placeholder="811 2222 3434" />
-                            </div>
-                        </div> --}}
+                        @php
+                            $path_photo = asset('storage/images/' . $edit->file);
+                            $extphoto = pathinfo($path_photo, PATHINFO_EXTENSION);
+                        @endphp
+
+                        <div class="mb-3 col-md-12">
+                            <label for="alamat" class="form-label">Foto Kos</label><br>
+                            <img src="{{ $path_photo }}" alt="">
+                        </div>
+                        <div class="mb-3 col-md-12">
+                            <label for="alamat" class="form-label">Ganti Foto Kos</label><br>
+                            <input class="form-control" type="file" id="picture" name="file">
+                        </div>
                         <div class="mb-3 col-md-12">
                             <label for="alamat" class="form-label">Alamat</label>
                             <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Alamat"

@@ -9,7 +9,8 @@
             <h5 class="card-header text-primary">Edit Room</h5>
             <hr class="my-0" />
             <div class="card-body">
-                <form action="{{ route('roomOwner-update', $edit->id) }}" id="formAccountSettings" method="POST">
+                <form action="{{ route('roomOwner-update', $edit->id) }}" id="formAccountSettings" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="mb-3 col-md-12">
@@ -26,6 +27,24 @@
                             <label for="roomNumber" class="form-label">Nomor kamar</label>
                             <input class="form-control" type="number" id="roomNumber" name="roomNumber"
                                 placeholder="Nomor Kamar" value="{{ $edit->room_number }}" />
+                        </div>
+                        <div class="mb-3 col-md-12">
+                            <label for="fasilitas" class="form-label">Fasilitas kamar</label>
+                            <textarea name="fasilitas" id="fasilitas" rows="10" class="form-control"
+                                placeholder="Tuliskan fasilitas yang ada di kamar ini...">{{ $edit->fasilitas }}</textarea>
+                        </div>
+                        @php
+                            $path_photo = asset('storage/images/rooms/' . $edit->file);
+                            $extphoto = pathinfo($path_photo, PATHINFO_EXTENSION);
+                        @endphp
+
+                        <div class="mb-3 col-md-12">
+                            <label for="alamat" class="form-label">Foto Kos</label><br>
+                            <img src="{{ $path_photo }}" alt="">
+                        </div>
+                        <div class="mb-3 col-md-12">
+                            <label for="alamat" class="form-label">Ganti Foto Kos</label><br>
+                            <input class="form-control" type="file" id="picture" name="file">
                         </div>
                         <div class="mb-3 col-md-12">
                             <label for="price" class="form-label">Harga Kamar</label>

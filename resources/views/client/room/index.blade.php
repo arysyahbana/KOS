@@ -1,25 +1,71 @@
-@extends('admin.layouts.app')
+@extends('layouts.client.app')
 
 @section('title', 'Client Room')
 
 @section('main-content')
-    <div class="container-xxl flex-grow-1 container-p-y">
-        <div class="row">
+    <div class="banner text-center relative">
+        <div class="flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 min-w-96">
+            <p class="font-bold text-3xl md:text-4xl lg:text-5xl tracking-[0.2rem] text-white mb-10">
+                {{ $kost->name }}</p>
+
+            <form action="{{ route('search-room', [$kost->id]) }}" class="w-full mx-auto" method="GET">
+                <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </div>
+                    <input type="search" id="default-search"
+                        class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Cari Kamar di Kos ini..." name="search_room" value="{{ request('search_room') }}" />
+                    <button type="submit"
+                        class="text-white absolute end-2.5 bottom-2.5 text-white bg-gradient-to-r from-[#41C9E2] to-[#008DDA] hover:opacity-90 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Cari</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="container mx-auto mb-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-10 justify-items-center">
+
             @foreach ($rooms as $item)
-                <div class="col col-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $item->rKost->name }}</h5>
-                            <h6 class="card-subtitle text-muted">Nomor Kamar : {{ $item->room_number }}</h6>
-                            <img class="img-fluid d-flex mx-auto my-4 rounded"
-                                src="{{ asset('dist-admin/assets/img/kamar1.webp') }}" alt="Card image cap" />
-                            <p class="card-text">Harga : Rp.{{ $item->price }}</p>
-                            <p class="card-text">{{ $item->status }}</p>
-                            <a href="" class="btn btn-outline-primary">Reservasi</a>
+                @if ($item->status == 'Kosong' || $item->status == 'Pending')
+                    @php
+                        $path_photo = asset('storage/images/rooms/' . $item->file);
+                        $extphoto = pathinfo($path_photo, PATHINFO_EXTENSION);
+                    @endphp
+                    <div class="mx-5 mt-5 max-w-sm bg-white border border-gray-200 rounded-lg shadow">
+                        <a href="#">
+                            <img class="rounded-t-lg h-[12rem] min-w-[20rem]" src="{{ $path_photo }}" alt="" />
+                        </a>
+                        <div class="p-5">
+                            <a href="#">
+                                <h5 class="mb-5 text-2xl font-bold tracking-tight text-gray-900">Nomor :
+                                    {{ $item->room_number }}</h5>
+                            </a>
+                            <p class="font-normal text-gray-700 dark:text-gray-400">Harga : Rp.{{ $item->price }}</p>
+                            <p class="mb-5 font-normal text-gray-700 dark:text-gray-400">Status : {{ $item->status }}</p>
+                            <a href="{{ route('roomDetail-show', [$item->id]) }}"
+                                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-gradient-to-r from-[#41C9E2] to-[#008DDA] hover:opacity-90  rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                Detail
+                                <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                </svg>
+                            </a>
                         </div>
                     </div>
-                </div>
+                @endif
             @endforeach
+
+        </div>
+
+        <div class="px-5 mt-10">
+            {{ $rooms->links() }}
         </div>
     </div>
 @endsection

@@ -9,7 +9,8 @@
             <h5 class="card-header text-primary">Add Room</h5>
             <hr class="my-0" />
             <div class="card-body">
-                <form action="{{ route('roomOwner-store') }}" id="formAccountSettings" method="POST">
+                <form action="{{ route('roomOwner-store') }}" id="formAccountSettings" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="mb-3 col-md-12">
@@ -25,6 +26,15 @@
                             <label for="roomNumber" class="form-label">Nomor kamar</label>
                             <input class="form-control" type="number" id="roomNumber" name="roomNumber"
                                 placeholder="Nomor Kamar" autofocus />
+                        </div>
+                        <div class="mb-3 col-md-12">
+                            <label for="fasilitas" class="form-label">Fasilitas kamar</label>
+                            <textarea name="fasilitas" id="fasilitas" rows="10" class="form-control"
+                                placeholder="Tuliskan fasilitas yang ada di kamar ini..."></textarea>
+                        </div>
+                        <div class="mb-3 col-md-12">
+                            <label class="form-label" for="file">Foto Kos</label>
+                            <input class="form-control" type="file" id="picture" name="file">
                         </div>
                         {{-- <div class="mb-3 col-md-12">
                             <label class="form-label" for="hp">Nomor HP</label>

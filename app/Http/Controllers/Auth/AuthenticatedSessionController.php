@@ -34,7 +34,7 @@ class AuthenticatedSessionController extends Controller
         } elseif (auth()->user()->role === 'Owner') {
             return redirect()->intended('/home-owner');
         } elseif (auth()->user()->role === 'Client') {
-            return redirect()->intended('/home-client');
+            return redirect()->intended('/');
         } else {
             return redirect()->intended('/');
         }

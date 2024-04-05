@@ -9,7 +9,7 @@
             <h5 class="card-header text-primary">Add Kost</h5>
             <hr class="my-0" />
             <div class="card-body">
-                <form action="{{ route('kost-store') }}" id="formAccountSettings" method="POST">
+                <form action="{{ route('kost-store') }}" id="formAccountSettings" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="mb-3 col-md-12">
@@ -28,14 +28,6 @@
                             <input class="form-control" type="text" id="name" name="name" placeholder="Fullname"
                                 autofocus />
                         </div>
-                        {{-- <div class="mb-3 col-md-12">
-                            <label class="form-label" for="hp">Nomor HP</label>
-                            <div class="input-group input-group-merge">
-                                <span class="input-group-text">IND (+62)</span>
-                                <input type="text" id="hp" name="hp" class="form-control"
-                                    placeholder="811 2222 3434" />
-                            </div>
-                        </div> --}}
                         <div class="mb-3 col-md-12">
                             <label for="alamat" class="form-label">Alamat</label>
                             <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Alamat" />
@@ -44,6 +36,10 @@
                             <label for="room" class="form-label">Jumlah Kamar</label>
                             <input type="number" class="form-control" id="room" name="room"
                                 placeholder="Jumlah kamar" />
+                        </div>
+                        <div class="mb-3 col-md-12">
+                            <label for="picture" class="form-label">Foto Kos</label>
+                            <input class="form-control" type="file" id="picture" name="file">
                         </div>
                     </div>
                     <div class="mt-2">

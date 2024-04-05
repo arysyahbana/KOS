@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('kost_id')->references('id')->on('kosts')->onDelete('cascade');
             $table->foreignId('user_id');
             $table->string('room_number');
+            $table->text('fasilitas');
+            $table->string('file');
             $table->string('price');
             $table->string('status');
             $table->timestamps();

@@ -206,9 +206,8 @@
                     <div data-i18n="Calendar">Kamar</div>
                 </a>
             </li>
-            <li class="menu-item">
-                <a href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/app-kanban.html"
-                    target="_blank" class="menu-link">
+            <li class="menu-item {{ $page == 'res' ? 'active' : '' }}">
+                <a href="{{ route('res-show') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-calendar bx-tada-hover"></i>
                     <div data-i18n="Kanban">Reservasi</div>
                     {{-- <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto">Pro</div> --}}
@@ -227,17 +226,10 @@
                     <div data-i18n="Chat">Kost</div>
                 </a>
             </li>
-        @elseif (Auth::guard()->user()->role == 'Client')
-            <li class="menu-item {{ $page == 'dashboard-client' ? 'active' : '' }}">
-                <a href="{{ route('client-panel') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-home-circle bx-tada-hover"></i>
-                    <div data-i18n="Email">Dashboard</div>
-                </a>
-            </li>
-            <li class="menu-item {{ $page == 'kost-client' ? 'active' : '' }}">
-                <a href="{{ route('kostClient-show') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-buildings bx-tada-hover"></i>
-                    <div data-i18n="Chat">Kost</div>
+            <li class="menu-item {{ $page == 'res-owner' ? 'active' : '' }}">
+                <a href="{{ route('resOwner-show') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-calendar bx-tada-hover"></i>
+                    <div data-i18n="Kanban">Reservasi</div>
                 </a>
             </li>
         @endif

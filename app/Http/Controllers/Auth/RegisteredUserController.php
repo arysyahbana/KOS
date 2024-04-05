@@ -36,10 +36,16 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $hp = $request->input('hp');
+
+        if (substr($hp, 0, 1) === '0') {
+            $hp = '+62' . substr($hp, 1);
+        }
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'hp' => $request->hp,
+            'hp' => $hp,
             'alamat' => $request->alamat,
             'role' => $request->role,
             'password' => Hash::make($request->password),
@@ -54,7 +60,7 @@ class RegisteredUserController extends Controller
         } elseif (auth()->user()->role === 'Owner') {
             return redirect()->intended('/home-owner');
         } elseif (auth()->user()->role === 'Client') {
-            return redirect()->intended('/home-client');
+            return redirect()->intended('/');
         } else {
             return redirect()->intended('/');
         }
